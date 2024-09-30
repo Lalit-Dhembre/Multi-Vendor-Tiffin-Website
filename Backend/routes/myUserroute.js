@@ -1,8 +1,13 @@
-const express = require("express")
-const controller = require("../controller/myUserController")
+const express = require("express");
+const controller = require("../controller/myUserController");
+const { jwtCheck, jwtDecode } = require("../middleware/auth");
 
-const router = express.Router()
+const router = express.Router();
 
-router.post("/", controller.createCurrentUser)
+// Route for creating a user
+router.post("/create", jwtCheck, controller.createCurrentUser);
 
-module.exports = router
+// Route for updating a user
+router.post("/update", jwtCheck, jwtDecode, controller.updateCurrentUser);
+
+module.exports = router;
